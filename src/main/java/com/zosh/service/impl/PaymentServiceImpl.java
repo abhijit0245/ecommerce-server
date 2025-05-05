@@ -30,8 +30,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
 
-    @Value("${stripe.api.key}")
-    private String stripeSecretKey;
+//    @Value("${stripe.api.key}")
+//    private String stripeSecretKey;
 
     @Value("${razorpay.api.key}")
     private String apiKey;
@@ -169,38 +169,38 @@ public class PaymentServiceImpl implements PaymentService {
         }
     }
 
-    @Override
-    public String createStripePaymentLink(User user, Long amount,Long orderId) throws StripeException {
-        Stripe.apiKey = stripeSecretKey;
-
-        SessionCreateParams params = SessionCreateParams.builder()
-                .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
-                .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setSuccessUrl("http://localhost:3000/payment-success/"+orderId)
-                .setCancelUrl("http://localhost:3000/payment/cancel")
-                .addLineItem(SessionCreateParams.LineItem.builder()
-                        .setQuantity(1L)
-                        .setPriceData(SessionCreateParams.LineItem.PriceData.builder()
-                                .setCurrency("usd")
-                                .setUnitAmount(amount*100)
-                                .setProductData(SessionCreateParams
-                                        .LineItem
-                                        .PriceData
-                                        .ProductData
-                                        .builder()
-                                        .setName("Top up wallet")
-                                        .build()
-                                ).build()
-                        ).build()
-                ).build();
-
-        Session session = Session.create(params);
-
-        System.out.println("session _____ " + session);
-
-//        PaymentLinkResponse res = new PaymentLinkResponse();
-//        res.setPayment_link_url(session.getUrl());
-
-        return session.getUrl();
-    }
+//    @Override
+//    public String createStripePaymentLink(User user, Long amount,Long orderId) throws StripeException {
+//        Stripe.apiKey = stripeSecretKey;
+//
+//        SessionCreateParams params = SessionCreateParams.builder()
+//                .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
+//                .setMode(SessionCreateParams.Mode.PAYMENT)
+//                .setSuccessUrl("http://localhost:3000/payment-success/"+orderId)
+//                .setCancelUrl("http://localhost:3000/payment/cancel")
+//                .addLineItem(SessionCreateParams.LineItem.builder()
+//                        .setQuantity(1L)
+//                        .setPriceData(SessionCreateParams.LineItem.PriceData.builder()
+//                                .setCurrency("usd")
+//                                .setUnitAmount(amount*100)
+//                                .setProductData(SessionCreateParams
+//                                        .LineItem
+//                                        .PriceData
+//                                        .ProductData
+//                                        .builder()
+//                                        .setName("Top up wallet")
+//                                        .build()
+//                                ).build()
+//                        ).build()
+//                ).build();
+//
+//        Session session = Session.create(params);
+//
+//        System.out.println("session _____ " + session);
+//
+////        PaymentLinkResponse res = new PaymentLinkResponse();
+////        res.setPayment_link_url(session.getUrl());
+//
+//        return session.getUrl();
+//    }
 }
